@@ -11,7 +11,7 @@ const globalSlice = createSlice({
   initialState,
   reducers: {
     changeCurrency(state, action) {
-      return (state.currency = action.payload);
+      state.currency = action.payload;
     },
   },
 });

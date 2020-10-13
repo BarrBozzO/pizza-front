@@ -8,11 +8,17 @@ import API from "api";
 export const fetchPizza = createAsyncThunk(
   "pizza/fetch",
   async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const currency = state.global.currency;
+
     const response = await API.request({
       method: "GET",
       path: "/goods",
       transformResponse: ({ goods }) => {
         return goods;
+      },
+      query: {
+        currency,
       },
     });
 

@@ -24,7 +24,7 @@ class API {
     return null;
   }
 
-  async request({ method, path, transformResponse, payload }) {
+  async request({ method, path, transformResponse, payload, query = {} }) {
     try {
       const config = {
         method: method || "GET",
@@ -32,6 +32,7 @@ class API {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
+        qs: "",
       };
 
       const token = this._getAccessToken();
@@ -39,7 +40,20 @@ class API {
         config.headers["Authorization"] = `Bearer ${token}`;
       }
 
-      const response = await fetch(`${this.api_url}/v1${path}`, config);
+      if (Object.keys(query).length) {
+        config.qs =
+          "?" +
+          Object.keys(query)
+            .map(
+              (k) => encodeURIComponent(k) + "=" + encodeURIComponent(query[k])
+            )
+            .join("&");
+      }
+
+      const response = await fetch(
+        `${this.api_url}/v1${path}${config.qs}`,
+        config
+      );
 
       if (response.ok) {
         // debugger;

@@ -1,0 +1,15 @@
+.auth {
+  padding-top: 65px;
+
+  &-form {
+    margin: 0 auto;
+    margin-top: 16px;
+    padding: 16px;
+    width: 400px;
+    background-color: #fff;
+  }
+
+  &-submit {
+    margin: 16px auto 0;
+  }
+}
