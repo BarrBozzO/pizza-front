@@ -20,7 +20,7 @@ const globalSlice = createSlice({
     },
     dropCart(state) {
       state.count = 0;
-      state.items = [];
+      state.items = {};
     },
   },
 });

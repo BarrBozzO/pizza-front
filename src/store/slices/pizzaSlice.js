@@ -11,7 +11,7 @@ export const fetchPizza = createAsyncThunk(
     const state = thunkAPI.getState();
     const currency = state.global.currency;
 
-    const response = await API.request({
+    const response = await thunkAPI.extra.api.request({
       method: "GET",
       path: "/goods",
       transformResponse: ({ goods }) => {

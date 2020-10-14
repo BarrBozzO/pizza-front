@@ -1,18 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import API from "api";
-import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "../../constants";
-
-function persistAccessToken(token) {
-  window.localStorage.setItem(
-    LOCAL_STORAGE_ACCESS_TOKEN_KEY,
-    JSON.stringify(token)
-  );
-}
 
 export const signUp = createAsyncThunk(
   "auth/signup",
   async (creds, thunkAPI) => {
-    const response = await API.request({
+    const response = await thunkAPI.extra.api.request({
       method: "POST",
       path: "/auth/register",
       payload: {
@@ -26,8 +17,6 @@ export const signUp = createAsyncThunk(
       return thunkAPI.rejectWithValue(response.error);
     }
 
-    persistAccessToken(response.data.token);
-
     return response.data;
   }
 );
@@ -35,7 +24,7 @@ export const signUp = createAsyncThunk(
 export const signIn = createAsyncThunk(
   "auth/signin",
   async (creds, thunkAPI) => {
-    const response = await API.request({
+    const response = await thunkAPI.extra.api.request({
       method: "POST",
       path: "/auth/login",
       payload: {
@@ -48,8 +37,6 @@ export const signIn = createAsyncThunk(
       return thunkAPI.rejectWithValue(response.error);
     }
 
-    persistAccessToken(response.data.token);
-
     return response.data;
   }
 );
@@ -61,7 +48,13 @@ const profileSlice = createSlice({
     error: null,
     loading: false,
   },
-  reducers: {},
+  reducers: {
+    logout(state, payload) {
+      state.data = {};
+      state.error = null;
+      state.loading = false;
+    },
+  },
   extraReducers: (builder) => {
     // Sign UP
     builder.addCase(signUp.pending, (state, action) => {
@@ -70,6 +63,7 @@ const profileSlice = createSlice({
     builder.addCase(signUp.fulfilled, (state, action) => {
       state.data = {
         ...state.data,
+        ...action.payload,
         ...action.payload.user,
       };
       state.loading = false;
@@ -87,6 +81,7 @@ const profileSlice = createSlice({
     builder.addCase(signIn.fulfilled, (state, action) => {
       state.data = {
         ...state.data,
+        ...action.payload,
         ...action.payload.user,
       };
       state.loading = false;
@@ -100,3 +95,7 @@ const profileSlice = createSlice({
 });
 
 export const { reducer, actions } = profileSlice;
+
+export const { logout } = actions;
+
+export const getToken = (state) => state.profile.data.token;

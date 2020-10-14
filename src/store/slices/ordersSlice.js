@@ -4,7 +4,6 @@ import {
   createEntityAdapter,
 } from "@reduxjs/toolkit";
 import { dropCart } from "./cartSlice";
-import API from "api";
 
 export const fetchOrders = createAsyncThunk(
   "orders/fetch",
@@ -12,7 +11,7 @@ export const fetchOrders = createAsyncThunk(
     const state = thunkAPI.getState();
     const currency = state.global.currency;
 
-    const response = await API.request({
+    const response = await thunkAPI.extra.api.request({
       method: "GET",
       path: "/orders",
       transformResponse: ({ orders }) => {
@@ -37,7 +36,7 @@ export const makeOrder = createAsyncThunk(
     const state = thunkAPI.getState();
     const cartItems = state.cart.items;
 
-    const response = await API.request({
+    const response = await thunkAPI.extra.api.request({
       method: "POST",
       path: "/orders",
       payload: {

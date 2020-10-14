@@ -4,6 +4,12 @@
   flex-wrap: wrap;
 
   margin-top: 16px;
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
 }
 
 .card {
@@ -16,6 +22,12 @@
   border: 1px solid #ededed;
   color: #70544f;
   text-align: left;
+  max-width: 300px;
+
+  @media screen and (max-width: 600px) {
+    flex: 1 0 auto;
+    max-width: 100%;
+  }
 
   &-title {
     font-weight: 700;

@@ -3,12 +3,11 @@ import {
   createSlice,
   createEntityAdapter,
 } from "@reduxjs/toolkit";
-import API from "api";
 
 export const fetchCurrencies = createAsyncThunk(
   "currencies/fetch",
   async (_, thunkAPI) => {
-    const response = await API.request({
+    const response = await thunkAPI.extra.api.request({
       method: "GET",
       path: "/currencies",
       transformResponse: ({ currencies }) => {

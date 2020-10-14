@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import Item from "./Item";
 import OrderForm from "./OrderForm";
+import { fetchPizza } from "store/slices/pizzaSlice";
 
 import styles from "./style.module.scss";
 
@@ -14,9 +15,14 @@ function rednerPrice(value, currency) {
 }
 
 function Cart() {
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const pizzaItems = useSelector((state) => state.pizza.entities);
   const currencyISO = useSelector((state) => state.global.currency);
+
+  useEffect(() => {
+    dispatch(fetchPizza());
+  }, [currencyISO]);
 
   const prices = {
     items: Object.keys(cart.items).reduce((summ, id) => {
@@ -34,11 +40,6 @@ function Cart() {
 
   return (
     <div className={styles["cart"]}>
-      <div>
-        <Link className={styles["cart-menu-link"]} to="/">
-          Back to Menu
-        </Link>
-      </div>
       <div className={styles["cart-list"]}>
         {Object.keys(cart.items)
           .filter((id) => !!cart.items[id])
@@ -63,6 +64,9 @@ function Cart() {
         <div>
           <OrderForm />
         </div>
+        <Link className={styles["cart-menu-link"]} to="/">
+          Back to Menu
+        </Link>
       </div>
     </div>
   );

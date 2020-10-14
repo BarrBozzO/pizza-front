@@ -1,27 +1,23 @@
-import { LOCAL_STORAGE_ACCESS_TOKEN_KEY } from "../constants";
+import { logout, getToken } from "store/slices/profileSlice";
 
 class API {
-  constructor() {
+  constructor(store) {
     this.api_url = process.env.REACT_APP_API_URL;
+    this.store = store;
   }
 
   _getAccessToken() {
-    const tokenJSON = window.localStorage.getItem(
-      LOCAL_STORAGE_ACCESS_TOKEN_KEY
-    );
+    const token = getToken(this.store.getState());
 
-    if (tokenJSON) {
-      try {
-        const token = JSON.parse(tokenJSON);
-        if (token && token.accessToken) {
-          return token.accessToken;
-        }
-      } catch (err) {
-        throw new Error("Unable to parse token");
-      }
+    if (token) {
+      return token.accessToken;
     }
 
     return null;
+  }
+
+  _unAuthorize() {
+    this.store.dispatch(logout());
   }
 
   async request({ method, path, transformResponse, payload, query = {} }) {
@@ -68,6 +64,10 @@ class API {
         };
       }
 
+      if (response.status === 401) {
+        this._unAuthorize();
+      }
+
       const error = await response.json();
 
       return {
@@ -81,4 +81,4 @@ class API {
   }
 }
 
-export default new API();
+export default API;
