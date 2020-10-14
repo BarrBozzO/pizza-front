@@ -58,7 +58,9 @@ function SignIn() {
             >
               Sign-In
             </Button>
-            <Link to="/auth/signup">Sign-Up</Link>
+            <Link className={style["auth-link"]} to="/auth/signup">
+              Sign-Up
+            </Link>
           </Form>
         )}
       </Formik>

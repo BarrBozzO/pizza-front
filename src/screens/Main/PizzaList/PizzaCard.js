@@ -39,7 +39,7 @@ function PizzaCard({ id }) {
         {renderPrice()}
         {inCartCount === 0 ? (
           <Button className={style["card-add"]} onClick={() => handleAdd(id)}>
-            Add to cart
+            Add
           </Button>
         ) : (
           <>

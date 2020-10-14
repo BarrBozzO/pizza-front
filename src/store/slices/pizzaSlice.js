@@ -3,7 +3,6 @@ import {
   createSlice,
   createEntityAdapter,
 } from "@reduxjs/toolkit";
-import API from "api";
 
 export const fetchPizza = createAsyncThunk(
   "pizza/fetch",

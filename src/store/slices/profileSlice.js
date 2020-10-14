@@ -41,6 +41,22 @@ export const signIn = createAsyncThunk(
   }
 );
 
+export const fetchProfile = createAsyncThunk(
+  "profile/fetch",
+  async (_, thunkAPI) => {
+    const response = await thunkAPI.extra.api.request({
+      method: "GET",
+      path: "/user",
+    });
+
+    if (response.error) {
+      return thunkAPI.rejectWithValue(response.error);
+    }
+
+    return response.data;
+  }
+);
+
 const profileSlice = createSlice({
   name: "profile",
   initialState: {
@@ -87,6 +103,23 @@ const profileSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(signIn.rejected, (state, action) => {
+      state.data = {};
+      state.error = action.payload;
+      state.loading = false;
+    });
+
+    // Fetch Profile
+    builder.addCase(fetchProfile.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchProfile.fulfilled, (state, action) => {
+      state.data = {
+        ...state.data,
+        ...action.payload.user,
+      };
+      state.loading = false;
+    });
+    builder.addCase(fetchProfile.rejected, (state, action) => {
       state.data = {};
       state.error = action.payload;
       state.loading = false;

@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import PizzaCard from "./PizzaCard";
+import { Preloader } from "components";
 
 import styles from "./styles.module.scss";
 
@@ -11,9 +12,11 @@ function PizzaList() {
 
   return (
     <div className={styles["list"]}>
-      {isLoading
-        ? "Loading data..."
-        : pizzaIds.map((id) => <PizzaCard key={id} id={id} />)}
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        pizzaIds.map((id) => <PizzaCard key={id} id={id} />)
+      )}
     </div>
   );
 }
