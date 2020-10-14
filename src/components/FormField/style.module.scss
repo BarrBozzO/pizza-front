@@ -1,0 +1,22 @@
+.field {
+  & + & {
+    margin-top: 8px;
+  }
+
+  &-label {
+    display: block;
+    font-size: 18px;
+    color: #666;
+  }
+
+  &-input {
+    display: block;
+    width: 100%;
+  }
+
+  &-error {
+    display: block;
+    margin-top: 4px;
+    color: red;
+  }
+}

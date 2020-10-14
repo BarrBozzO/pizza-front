@@ -1,0 +1,22 @@
+.profile {
+  padding-top: 65px;
+
+  &-data {
+    margin: 16px auto;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 18px;
+  }
+}
+
+.orders {
+  margin: 16px auto;
+
+  &-item {
+    max-width: 200px;
+    margin: 0 auto;
+    padding: 16px;
+    background-color: #fff;
+    border: 1px solid #efefef;
+  }
+}
