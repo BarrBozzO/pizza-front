@@ -4,7 +4,7 @@
 ## Demo
 https://awesome-pizza-app.netlify.app/
 
-To run locally
+### To run locally
 
 1. install deps
 
@@ -18,7 +18,7 @@ yarn install
 yarn start
 ```
 
-To build:
+### To build
 
 ```
 yarn build
