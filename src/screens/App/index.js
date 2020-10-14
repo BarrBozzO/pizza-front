@@ -7,6 +7,7 @@ import Cart from "../Cart";
 import OrderSuccess from "../OrderSuccess";
 import Auth from "../Auth";
 import { fetchCurrencies } from "store/slices/currenciesSlice.js";
+import { fetchProfile } from "store/slices/profileSlice.js";
 
 import { Header } from "components";
 
@@ -19,6 +20,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchCurrencies());
+    dispatch(fetchProfile());
   }, [dispatch]);
 
   return (

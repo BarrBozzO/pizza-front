@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeCurrency } from "store/slices/global";
 
 import { Button } from "components";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import styles from "./style.module.scss";
 
 function Header({ isLogged, cartItemsCount }) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   const selectedCurrencyISO = useSelector((state) => state.global.currency);
   const currencies = useSelector((state) => state.currencies);
 
@@ -20,6 +21,15 @@ function Header({ isLogged, cartItemsCount }) {
 
   return (
     <div className={styles["header"]}>
+      {location.pathname !== "/" && (
+        <Button
+          secondary
+          className={styles["header-menu"]}
+          onClick={() => history.push("/")}
+        >
+          MENU
+        </Button>
+      )}
       <div className={styles["header-controls"]}>
         <select
           className={styles["header-currency"]}
@@ -35,16 +45,18 @@ function Header({ isLogged, cartItemsCount }) {
             );
           })}
         </select>
-        <Button
-          onClick={() => history.push("/cart")}
-          secondary
-          className={styles["cart"]}
-        >
-          {Boolean(cartItemsCount) && (
-            <span className={styles["cart-counter"]}>{cartItemsCount}</span>
-          )}
-          Cart
-        </Button>
+        {location.pathname !== "/cart" && (
+          <Button
+            onClick={() => history.push("/cart")}
+            secondary
+            className={styles["cart"]}
+          >
+            {Boolean(cartItemsCount) && (
+              <span className={styles["cart-counter"]}>{cartItemsCount}</span>
+            )}
+            Cart
+          </Button>
+        )}
         {isLogged ? (
           <Button
             onClick={() => history.push("/profile")}

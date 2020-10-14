@@ -16,7 +16,7 @@ function Main() {
 
   return (
     <div className={style["main"]}>
-      <h1>Pizza</h1>
+      <h1>Pizzas</h1>
       <PizzaList />
     </div>
   );

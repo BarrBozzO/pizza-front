@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOrders } from "store/slices/ordersSlice";
+
+import { Preloader } from "components";
 
 import style from "./style.module.scss";
 
@@ -18,7 +19,7 @@ function Profile() {
   const renderOrders = () => {
     const { loading, ids, entities } = orders;
 
-    if (loading) return "orders loading...";
+    if (loading) return <Preloader />;
 
     if (!ids.length) return "No Orders Yet";
 
@@ -45,7 +46,6 @@ function Profile() {
   return (
     <div className={style["profile"]}>
       <div className={style["profile-data"]}>
-        <Link to="/">Go To Menu</Link>
         <h1>Profile</h1>
         <div>
           <b>Email:</b> {profile.email}

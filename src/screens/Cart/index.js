@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 
 import Item from "./Item";
 import OrderForm from "./OrderForm";
@@ -64,9 +63,6 @@ function Cart() {
         <div>
           <OrderForm />
         </div>
-        <Link className={styles["cart-menu-link"]} to="/">
-          Back to Menu
-        </Link>
       </div>
     </div>
   );
